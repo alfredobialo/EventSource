@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\obialoa\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\obialoa\\.nuget\\packages"
+    ]
+  }
+}
