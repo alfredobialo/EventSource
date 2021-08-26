@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventSource.Core;
+using EventSource.Domain.orders;
 
-namespace EventSource
+namespace EventSource.Services.orders
 {
     public class SalesOrderService : ISalesOrderService
     {

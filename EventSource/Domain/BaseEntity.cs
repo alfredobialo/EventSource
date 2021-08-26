@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventSource
+namespace EventSource.Domain
 {
     public abstract class BaseEntity
     {

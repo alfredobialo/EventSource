@@ -1,6 +1,7 @@
 ﻿using System;
+using EventSource.Services.crm;
 
-namespace EventSource
+namespace EventSource.Domain.orders
 {
     public class SalesOrder : BaseEntity
     {

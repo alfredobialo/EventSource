@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EventSource
+namespace EventSource.Domain.orders
 {
     public class SalesOrderCreatingEventArg : EventArgs
     {

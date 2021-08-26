@@ -1,4 +1,6 @@
-﻿namespace EventSource
+﻿using EventSource.Services.crm;
+
+namespace EventSource.Domain.crm
 {
     public class Customer : BaseEntity, ICustomer
     {

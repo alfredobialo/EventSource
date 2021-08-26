@@ -1,4 +1,6 @@
-﻿namespace EventSource.Infastructure
+﻿using EventSource.Services.crm;
+
+namespace EventSource.Infastructure
 {
     public class FileDataStore
     {

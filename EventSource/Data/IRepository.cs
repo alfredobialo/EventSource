@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+using EventSource.Core;
+using EventSource.Domain;
 
-namespace EventSource
+namespace EventSource.Data
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {

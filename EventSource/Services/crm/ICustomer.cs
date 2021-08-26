@@ -1,4 +1,4 @@
-﻿namespace EventSource
+﻿namespace EventSource.Services.crm
 {
     public interface ICustomer
     {

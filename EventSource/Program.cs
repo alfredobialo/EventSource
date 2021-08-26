@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Immutable;
+using EventSource.Core;
+using EventSource.Domain.crm;
+using EventSource.Domain.orders;
+using EventSource.Services.orders;
 
 namespace EventSource
 {

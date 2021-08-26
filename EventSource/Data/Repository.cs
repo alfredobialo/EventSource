@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EventSource.Core;
+using EventSource.Domain;
 
-namespace EventSource
+namespace EventSource.Data
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {

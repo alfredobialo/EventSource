@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using EventSource.Domain.orders;
 
-namespace EventSource
+namespace EventSource.Services.orders
 {
     public interface ISalesOrderService
     {

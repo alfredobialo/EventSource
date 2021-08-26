@@ -1,4 +1,8 @@
 ﻿using System;
+using EventSource.Core;
+using EventSource.Domain.crm;
+using EventSource.Domain.orders;
+using EventSource.Services.orders;
 
 namespace EventSource.ConsoleApp
 {

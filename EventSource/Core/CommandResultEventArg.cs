@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventSource
+namespace EventSource.Core
 {
     public class CommandResultEventArg : EventArgs
     {

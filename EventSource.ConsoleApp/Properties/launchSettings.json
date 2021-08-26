@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "EventSource.ConsoleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "dbUser" : "sa",
+        "dbPassword" : "123456",
+        "dbServer" : "SQLEXPRESS",
+        "db" : "eventSourceDb"
+      },
+      "applicationUrl": "http://localhost:4500;https://localhost:4501"
+    }
+  }
+}

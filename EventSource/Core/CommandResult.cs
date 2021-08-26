@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EventSource
+namespace EventSource.Core
 {
     public class CommandResult
     {
