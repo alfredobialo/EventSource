@@ -21,13 +21,14 @@ namespace EventSource
                     Name = "Alfred Obialo"
                 },
                 Id ="000123",
-                SalesDate = DateTime.Now
+                SalesDate = DateTime.Now,
+                ChannelId = "HQ-001"
             };
-            
+
             salesOrderService.SalesOrderCreated += SalesOrderServiceOnSalesOrderCreated;
             salesOrderService.BeforeSalesOrderCreated += SalesOrderServiceOnBeforeSalesOrderCreated;
-            
-            salesOrderService.CreateOrder(so);
+
+            salesOrderService.CreateOrder(so).GetAwaiter().GetResult();
             Console.ReadLine();
         }
 
@@ -39,7 +40,7 @@ namespace EventSource
 
         private static void SalesOrderServiceOnSalesOrderCreated(object sender, CommandResultEventArg eventargs)
         {
-            // We have successfully Created a new Sales Order 
+            // We have successfully Created a new Sales Order
             // Send Message to Broker: (Kafka) etc
             var (result, data) = (eventargs.Result, eventargs.DataInfo);
             Console.WriteLine(result.Message);
@@ -47,6 +48,11 @@ namespace EventSource
 
             if (data.Data is SalesOrder salesOrder)
             {
+                var (customer, date) = salesOrder;
+                Console.WriteLine("===========DECONTRUCTOR===========");
+                Console.WriteLine($"===========  {customer.Id}  ===========");
+                Console.WriteLine($"===========  {date:d}  ===========");
+                Console.WriteLine("===========END OF DECONTRUCTOR===========");
                 Console.WriteLine("Sales Order Details:");
                 Console.WriteLine($"Customer Name: {salesOrder.Customer.Name}");
                 Console.WriteLine($"Date: {salesOrder.SalesDate:f}");
