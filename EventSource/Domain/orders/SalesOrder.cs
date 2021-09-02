@@ -7,5 +7,13 @@ namespace EventSource.Domain.orders
     {
         public ICustomer Customer { get; set; }
         public DateTime SalesDate { get; set; }
+
+        public void Deconstruct(out ICustomer customer, out DateTime salesDate)
+        {
+            customer = this.Customer;
+            salesDate = this.SalesDate;
+        }
+
+
     }
 }

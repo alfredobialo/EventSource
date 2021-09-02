@@ -8,5 +8,6 @@ namespace EventSource.Domain
         protected DateTime DateCreated { get; set; }
         protected string CreatedBy { get; set; }
         protected bool IsActive { get; set; } = true;
+        public string ChannelId { get; set; } = String.Empty;
     }
 }
