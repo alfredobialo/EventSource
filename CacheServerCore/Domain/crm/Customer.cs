@@ -1,8 +1,7 @@
-﻿using EventSource.Services.crm;
-
-namespace EventSource.Domain.crm
+﻿
+namespace CacheServerCore.Domain.crm
 {
-    public class Customer : BaseEntity, ICustomer
+    public class Customer
     {
         public string Name { get; set; }
         public string Id { get; set; }

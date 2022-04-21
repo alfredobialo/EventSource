@@ -3,6 +3,8 @@ using EventSource.Core;
 using EventSource.Domain.crm;
 using EventSource.Domain.orders;
 using EventSource.Services.orders;
+using System.IO.Pipes;
+
 
 namespace EventSource.ConsoleApp
 {
@@ -10,6 +12,9 @@ namespace EventSource.ConsoleApp
     {
         static void Main(string[] args)
         {
+            PipeStream ps = new NamedPipeServerStream("myPipe", PipeDirection.InOut);
+
+
             Console.WriteLine("Hello World!");
             ISalesOrderService salesOrderService = new SalesOrderService();
             SalesOrder so = new SalesOrder()
@@ -22,10 +27,10 @@ namespace EventSource.ConsoleApp
                 Id ="000123",
                 SalesDate = DateTime.Now
             };
-            
+
             salesOrderService.SalesOrderCreated += SalesOrderServiceOnSalesOrderCreated;
             salesOrderService.BeforeSalesOrderCreated += SalesOrderServiceOnBeforeSalesOrderCreated;
-            
+
             salesOrderService.CreateOrder(so);
             Console.ReadLine();
         }
@@ -38,7 +43,7 @@ namespace EventSource.ConsoleApp
 
         private static void SalesOrderServiceOnSalesOrderCreated(object sender, CommandResultEventArg eventargs)
         {
-           // We have successfully Created a new Sales Order 
+           // We have successfully Created a new Sales Order
            // Send Message to Broker: (Kafka) etc
            var (result, data) = (eventargs.Result, eventargs.DataInfo);
            Console.WriteLine(result.Message);

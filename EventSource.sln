@@ -4,6 +4,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSource", "EventSource\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSource.ConsoleApp", "EventSource.ConsoleApp\EventSource.ConsoleApp.csproj", "{61B768CE-3DA3-4629-BA9F-91F4B77635C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CacheServer", "CacheServer", "{EABECDFD-EE83-4F09-A964-088A82353D5E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBrokers", "MessageBrokers", "{6D708361-338F-4D74-9D2C-035537691781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheServerCore", "CacheServerCore\CacheServerCore.csproj", "{89AC224C-36D2-49FF-AA65-DB1C58DEFF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheServerCoreTest", "CacheServerCoreTest\CacheServerCoreTest.csproj", "{9FD6199A-860B-41A1-A55A-93AFFDDB2D27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +26,17 @@ Global
 		{61B768CE-3DA3-4629-BA9F-91F4B77635C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B768CE-3DA3-4629-BA9F-91F4B77635C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B768CE-3DA3-4629-BA9F-91F4B77635C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89AC224C-36D2-49FF-AA65-DB1C58DEFF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89AC224C-36D2-49FF-AA65-DB1C58DEFF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89AC224C-36D2-49FF-AA65-DB1C58DEFF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89AC224C-36D2-49FF-AA65-DB1C58DEFF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD6199A-860B-41A1-A55A-93AFFDDB2D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD6199A-860B-41A1-A55A-93AFFDDB2D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD6199A-860B-41A1-A55A-93AFFDDB2D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD6199A-860B-41A1-A55A-93AFFDDB2D27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{89AC224C-36D2-49FF-AA65-DB1C58DEFF89} = {EABECDFD-EE83-4F09-A964-088A82353D5E}
+		{9FD6199A-860B-41A1-A55A-93AFFDDB2D27} = {EABECDFD-EE83-4F09-A964-088A82353D5E}
 	EndGlobalSection
 EndGlobal
