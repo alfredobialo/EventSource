@@ -8,6 +8,7 @@ namespace CacheServerCore;
 public class AsomRedisLib
 {
     private readonly IDatabase db;
+    private static ConnectionMultiplexer redisCon;
 
     public AsomRedisLib()
     {

@@ -14,22 +14,33 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Akka" Version="1.4.31" />
-      <PackageReference Include="Akka.Cluster" Version="1.4.31" />
-      <PackageReference Include="Akka.Cluster.Sharding" Version="1.4.31" />
+      <PackageReference Include="Akka" Version="1.4.37" />
+      <PackageReference Include="Akka.Cluster" Version="1.4.37" />
+      <PackageReference Include="Akka.Cluster.Sharding" Version="1.4.37" />
+      <PackageReference Include="Akka.Cluster.Tools" Version="1.4.37" />
       <PackageReference Include="Akka.DI.AutoFac" Version="1.4.27" />
-      <PackageReference Include="Akka.DI.Core" Version="1.4.31" />
+      <PackageReference Include="Akka.DI.Core" Version="1.4.37" />
+      <PackageReference Include="Akka.DistributedData" Version="1.4.37" />
       <PackageReference Include="Akka.Monitoring" Version="1.1.0" />
-      <PackageReference Include="Akka.Persistence.Query" Version="1.4.31" />
-      <PackageReference Include="Akka.Persistence.Query.Sql" Version="1.4.31" />
-      <PackageReference Include="Akka.Persistence.Sql.Common" Version="1.4.31" />
+      <PackageReference Include="Akka.Persistence" Version="1.4.37" />
+      <PackageReference Include="Akka.Persistence.Query" Version="1.4.37" />
+      <PackageReference Include="Akka.Persistence.Query.Sql" Version="1.4.37" />
+      <PackageReference Include="Akka.Persistence.Sql.Common" Version="1.4.37" />
       <PackageReference Include="Akka.Persistence.SqlServer" Version="1.4.31" />
       <PackageReference Include="Akka.Quartz.Actor" Version="1.4.31" />
-      <PackageReference Include="Akka.Serialization.Hyperion" Version="1.4.31" />
-      <PackageReference Include="Akka.Streams" Version="1.4.31" />
-      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.3.3" />
-      <PackageReference Include="Quartz.Jobs" Version="3.3.3" />
-      <PackageReference Include="Quartz.Serialization.Json" Version="3.3.3" />
+      <PackageReference Include="Akka.Serialization.Hyperion" Version="1.4.37" />
+      <PackageReference Include="Akka.Streams" Version="1.4.37" />
+      <PackageReference Include="Autofac" Version="6.3.0" />
+      <PackageReference Include="Hyperion" Version="0.12.2" />
+      <PackageReference Include="MongoDB.Bson" Version="2.15.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
+      <PackageReference Include="MongoDB.Driver.Core" Version="2.15.0" />
+      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.4.0" />
+      <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
+      <PackageReference Include="Quartz.Jobs" Version="3.4.0" />
+      <PackageReference Include="Quartz.Plugins" Version="3.4.0" />
+      <PackageReference Include="Quartz.Plugins.TimeZoneConverter" Version="3.4.0" />
+      <PackageReference Include="Quartz.Serialization.Json" Version="3.4.0" />
     </ItemGroup>
 
 </Project>
