@@ -7,7 +7,7 @@ namespace UserManagement.core.Services.users.dataStore;
 public class FileDataStoreManager<TData> where TData : EntityBase
 {
     private readonly string _fileName;
-    Dictionary<string, TData>? lst = new Dictionary<string, TData>(); 
+    Dictionary<string, TData>? lst = new Dictionary<string, TData>();
     string path = "";
     public FileDataStoreManager(string fileName)
     {
@@ -17,7 +17,7 @@ public class FileDataStoreManager<TData> where TData : EntityBase
 
     private async Task CreateDbFile()
     {
-       
+
         if (!Directory.Exists(Path.Combine("Data")))
         {
             Directory.CreateDirectory(Path.Combine("Data"));
@@ -32,7 +32,7 @@ public class FileDataStoreManager<TData> where TData : EntityBase
             streamWriter.Close();
         }
     }
-    
+
     internal async Task<CommandResponse> AddNewItem(TData obj)
     {
         await CreateDbFile();
@@ -46,9 +46,22 @@ public class FileDataStoreManager<TData> where TData : EntityBase
             await streamWriter.WriteAsync(JsonConvert.SerializeObject(lst));
             await streamWriter.FlushAsync();
             streamWriter.Close();
-            return CommandResponse.Successful("User Created Succefully");
+            return CommandResponse.Successful("User Created Successfully");
         }
         return CommandResponse.Failure($"Record with Id : {obj.Id} already Exist");
+    }
+    internal async Task<CommandResponse<TData>> GetItem(string objId)
+    {
+        await CreateDbFile();
+        var content = await readFileContent();
+        lst = JsonConvert.DeserializeObject<Dictionary<string, TData>>(content);
+        // check if user Exist
+        if (lst.ContainsKey(objId))
+        {
+             var data  = lst[objId];
+            return CommandResponse<TData>.Successful(data,"User Loaded Successfully");
+        }
+        return CommandResponse<TData>.Failed($"Record with Id : {objId} Not  found");
     }
 
     private async Task<string> readFileContent()
