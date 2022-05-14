@@ -11,6 +11,11 @@ public class UserFileStore : IUserStore
     {
         fileDbManager = new FileDataStoreManager<AppUserEntity>("users.json");
     }
-    public async Task<CommandResponse> CreateUser(AppUserEntity user) => await fileDbManager.AddNewItem(user);
-   
+    public async Task<CommandResponse> CreateUser(AppUserEntity user)
+        => await fileDbManager.AddNewItem(user);
+    public async Task<CommandResponse<AppUserEntity>> GetUser(string userId)
+        => await fileDbManager.GetItem(userId);
+
+    public async Task<CommandResponse<IEnumerable<AppUserEntity>>> GetUser(ICriteria criteria)
+        => await  fileDbManager.GetItems(criteria);
 }

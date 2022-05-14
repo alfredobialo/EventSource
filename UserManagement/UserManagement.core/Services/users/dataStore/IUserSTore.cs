@@ -5,6 +5,8 @@ namespace UserManagement.core.Services.users.dataStore;
 public interface IUserStore
 {
     Task<CommandResponse> CreateUser(AppUserEntity user);
+    Task<CommandResponse<AppUserEntity>> GetUser(string userId);
+    Task<CommandResponse<IEnumerable<AppUserEntity>>> GetUser(ICriteria criteria);
 }
 
 public class AppUserEntity : EntityBase
@@ -17,9 +19,20 @@ public class AppUserEntity : EntityBase
     public string Email { get; set; }
 }
 
-public abstract class EntityBase
+public class UserStoreFactory  : IUserStoreFactory
 {
-    public string Id { get; set; }
-    public DateTimeOffset DateCreated { get; set; }
-    public DateTimeOffset DateModified { get; set; }
+    private readonly AppConfig _appConfig;
+
+    public UserStoreFactory(AppConfig appConfig)
+    {
+        _appConfig = appConfig;
+    }
+
+    public IUserStore GetStore() =>
+        _appConfig.StorageOption.UseMemoryStore ? new UserMemoryStore() : new UserFileStore();
+}
+
+public interface IUserStoreFactory
+{
+    IUserStore GetStore();
 }

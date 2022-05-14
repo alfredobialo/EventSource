@@ -9,7 +9,7 @@ namespace UserManager.api.Controllers;
 [Route("user-manager")]
 public class UserManagerController : ControllerBase
 {
-   
+
     private readonly IUserManagerQuery _userManagerQuery;
     private readonly IUserManagerCommand _userManagerCommand;
 
@@ -19,11 +19,15 @@ public class UserManagerController : ControllerBase
         _userManagerCommand = userManagerCommand;
     }
 
-    [HttpGet("")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetUser(string id)
     {
         return Ok(await _userManagerQuery.GetUser(new UserQueryRequest(id)));
     }
+
+    [HttpGet("")]
+    public async Task<IActionResult> GetUsers([FromQuery] UserListQueryRequest request)
+        =>  Ok(await _userManagerQuery.GetUsers(request));
 
     [HttpPost("")]
     public async Task<IActionResult> CreateUser([FromBody] AppUser user)

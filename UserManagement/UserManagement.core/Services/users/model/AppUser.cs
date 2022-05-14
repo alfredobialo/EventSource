@@ -21,4 +21,14 @@ public record AppUser
             LastName = LastName
         };
     }
+    public static AppUser FromEntity(AppUserEntity e)
+    {
+        return new AppUser()
+        {
+            Email = e.Email,
+            Id = e.Id,
+            FirstName = e.FirstName,
+            LastName = e.LastName
+        };
+    }
 }

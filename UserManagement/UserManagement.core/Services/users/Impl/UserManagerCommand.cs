@@ -9,9 +9,9 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
 {
     private readonly IUserStore _userStore;
 
-    public UserManagerManager(IUserStore userStore)
+    public UserManagerManager(IUserStoreFactory storeFactory)
     {
-        _userStore = userStore;
+        _userStore = storeFactory.GetStore();
     }
     public async Task<CommandResponse> AddUser(AppUser user)
     {
@@ -25,19 +25,26 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
         return null;
     }
 
-    public Task<AppUser> GetUser(UserQueryRequest query)
+    public async Task<AppUser> GetUser(UserQueryRequest query)
     {
-        return Task.FromResult(new AppUser()
-        {
-            Email = "alfred@gmail.com",
-            FirstName = "Alfred",
-            LastName = "Obialo",
-            Id = query.UserId
-        });
+        var entity = await _userStore.GetUser(query.UserId);
+        if(entity.Success)
+            return AppUser.FromEntity(entity.Data);
+
+        return null;
     }
 
-    public Task<IEnumerable<AppUser>> GetUsers(UserListQueryRequest query)
+    public async Task<IEnumerable<AppUser>> GetUsers(UserListQueryRequest query)
     {
-        return null;
+        var entity = await _userStore.GetUser(new Criteria()
+        {
+            Id = query.Key,
+            Query = query.Query,
+            SortBy = query.SortBy
+        });
+        if(entity.Success)
+            return entity.Data.Select(x => AppUser.FromEntity(x));
+
+        return new List<AppUser>();
     }
 }

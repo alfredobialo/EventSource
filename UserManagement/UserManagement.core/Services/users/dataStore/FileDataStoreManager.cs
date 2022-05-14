@@ -9,6 +9,7 @@ public class FileDataStoreManager<TData> where TData : EntityBase
     private readonly string _fileName;
     Dictionary<string, TData>? lst = new Dictionary<string, TData>();
     string path = "";
+
     public FileDataStoreManager(string fileName)
     {
         _fileName = fileName ?? DateTime.Now.Ticks.ToString();
@@ -17,7 +18,6 @@ public class FileDataStoreManager<TData> where TData : EntityBase
 
     private async Task CreateDbFile()
     {
-
         if (!Directory.Exists(Path.Combine("Data")))
         {
             Directory.CreateDirectory(Path.Combine("Data"));
@@ -35,9 +35,7 @@ public class FileDataStoreManager<TData> where TData : EntityBase
 
     internal async Task<CommandResponse> AddNewItem(TData obj)
     {
-        await CreateDbFile();
-        var content = await readFileContent();
-        lst = JsonConvert.DeserializeObject<Dictionary<string, TData>>(content);
+        await getFileContent();
         // check if user Exist
         if (!lst.ContainsKey(obj.Id))
         {
@@ -48,20 +46,36 @@ public class FileDataStoreManager<TData> where TData : EntityBase
             streamWriter.Close();
             return CommandResponse.Successful("User Created Successfully");
         }
+
         return CommandResponse.Failure($"Record with Id : {obj.Id} already Exist");
     }
-    internal async Task<CommandResponse<TData>> GetItem(string objId)
+
+    private async Task getFileContent()
     {
         await CreateDbFile();
         var content = await readFileContent();
         lst = JsonConvert.DeserializeObject<Dictionary<string, TData>>(content);
+    }
+
+    internal async Task<CommandResponse<TData>> GetItem(string objId)
+    {
+        await getFileContent();
         // check if user Exist
         if (lst.ContainsKey(objId))
         {
-             var data  = lst[objId];
-            return CommandResponse<TData>.Successful(data,"User Loaded Successfully");
+            var data = lst[objId];
+            return CommandResponse<TData>.Successful(data, "User Loaded Successfully");
         }
+
         return CommandResponse<TData>.Failed($"Record with Id : {objId} Not  found");
+    }
+
+    internal async Task<CommandResponse<IEnumerable<TData>>> GetItems(ICriteria criteria)
+    {
+        await getFileContent();
+        // check if user Exist
+        var data = lst.Values.ToList();
+        return CommandResponse<IEnumerable<TData>>.Successful(data, "All users returned");
     }
 
     private async Task<string> readFileContent()

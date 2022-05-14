@@ -36,6 +36,7 @@ public class CommandResponse<T> : CommandResponse
     {
         return new CommandResponse<T>()
         {
+            Success = true,
             Data = data, Message = message ?? "Success", Code = code
         };
     }

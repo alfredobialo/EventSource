@@ -1,9 +1,16 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MediatR;
+using Microsoft.Extensions.Options;
 using UserManagement.core.di;
+using UserManagement.core.Services.users.dataStore;
+using UserManagement.core.shared;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var appConfig = builder.Configuration.GetSection(nameof(AppConfig));
+builder.Services.Configure<AppConfig>(appConfig)
+    .AddSingleton(sp => sp.GetService<IOptions<AppConfig>>().Value);
 
 // Add services to the container.
 builder.Services.AddControllers();
