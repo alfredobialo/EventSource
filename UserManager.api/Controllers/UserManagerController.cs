@@ -1,4 +1,6 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.core.commands.user;
 using UserManagement.core.Services.users;
 using UserManagement.core.Services.users.model;
 using UserManagement.core.Services.users.reqRes;
@@ -9,31 +11,27 @@ namespace UserManager.api.Controllers;
 [Route("user-manager")]
 public class UserManagerController : ControllerBase
 {
-
     private readonly IUserManagerQuery _userManagerQuery;
-    private readonly IUserManagerCommand _userManagerCommand;
+    private readonly IMediator _mediator;
 
-    public UserManagerController(IUserManagerQuery userManagerQuery, IUserManagerCommand userManagerCommand)
+    public UserManagerController(IMediator mediator)
     {
-        _userManagerQuery = userManagerQuery;
-        _userManagerCommand = userManagerCommand;
+        _mediator = mediator;
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(string id)
-    {
-        return Ok(await _userManagerQuery.GetUser(new UserQueryRequest(id)));
-    }
+    public async Task<IActionResult> GetUser(string id) =>
+        Ok(await _mediator.Send(new GetUserCommand(new UserQueryRequest(id))));
 
     [HttpGet("")]
-    public async Task<IActionResult> GetUsers([FromQuery] UserListQueryRequest request)
-        =>  Ok(await _userManagerQuery.GetUsers(request));
+    public async Task<IActionResult> GetUsers([FromQuery] UserListQueryRequest request) =>
+        Ok(await _mediator.Send(new GetUsersCommand(request)));
 
     [HttpPost("")]
     public async Task<IActionResult> CreateUser([FromBody] AppUser user)
     {
         // do validation on Service Layer
-        var added = await _userManagerCommand.AddUser(user);
+        var added = await _mediator.Send(new CreateUserCommand { User = user });
 
         if (added.Success)
         {

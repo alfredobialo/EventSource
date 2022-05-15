@@ -1,7 +1,7 @@
-﻿using UserManagement.core.Services.users.dataStore;
+﻿using asom.lib.core;
+using UserManagement.core.Services.users.dataStore;
 using UserManagement.core.Services.users.model;
 using UserManagement.core.Services.users.reqRes;
-using UserManagement.core.shared;
 
 namespace UserManagement.core.Services.users.Impl;
 
@@ -25,26 +25,36 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
         return null;
     }
 
-    public async Task<AppUser> GetUser(UserQueryRequest query)
+    public async Task<CommandResponse<AppUser>> GetUser(UserQueryRequest query)
     {
         var entity = await _userStore.GetUser(query.UserId);
         if(entity.Success)
-            return AppUser.FromEntity(entity.Data);
+            return CommandResponse<AppUser>.SuccessResponse("",AppUser.FromEntity(entity.Data));
 
         return null;
     }
 
-    public async Task<IEnumerable<AppUser>> GetUsers(UserListQueryRequest query)
+    public async Task<PagedCommandResponse<IEnumerable<AppUser>>> GetUsers(UserListQueryRequest query)
     {
-        var entity = await _userStore.GetUser(new Criteria()
+        var entity = await _userStore.GetUser(new PagedDataCriteria()
         {
             Id = query.Key,
             Query = query.Query,
-            SortBy = query.SortBy
+            SortBy = query.SortBy,
+            PageSize = query.PageSize,
+            CurrentPage = query.CurrentPage
         });
-        if(entity.Success)
-            return entity.Data.Select(x => AppUser.FromEntity(x));
+        if (entity.Success)
+        {
+             var e = entity.Data
+                 .OrderBy(x => x.FirstName)
+                 .ThenBy(x =>x.LastName)
+                 .Select(x => AppUser.FromEntity(x));
+             var newData = entity.Copy(e);
+             return newData;
+        }
 
-        return new List<AppUser>();
+
+        return new PagedCommandResponse<IEnumerable<AppUser>>();
     }
 }
