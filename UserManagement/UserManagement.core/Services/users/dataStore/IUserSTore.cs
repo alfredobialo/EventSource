@@ -1,4 +1,6 @@
-﻿using UserManagement.core.shared;
+﻿using asom.lib.core;
+using UserManagement.core.shared;
+using CommandResponse = asom.lib.core.CommandResponse;
 
 namespace UserManagement.core.Services.users.dataStore;
 
@@ -6,7 +8,7 @@ public interface IUserStore
 {
     Task<CommandResponse> CreateUser(AppUserEntity user);
     Task<CommandResponse<AppUserEntity>> GetUser(string userId);
-    Task<CommandResponse<IEnumerable<AppUserEntity>>> GetUser(ICriteria criteria);
+    Task<PagedCommandResponse<IEnumerable<AppUserEntity>>> GetUser(PagedDataCriteria criteria);
 }
 
 public class AppUserEntity : EntityBase
@@ -29,7 +31,7 @@ public class UserStoreFactory  : IUserStoreFactory
     }
 
     public IUserStore GetStore() =>
-        _appConfig.StorageOption.UseMemoryStore ? new UserMemoryStore() : new UserFileStore();
+        /*_appConfig.StorageOption.UseMemoryStore ? new UserMemoryStore() :*/ new UserFileStore();
 }
 
 public interface IUserStoreFactory

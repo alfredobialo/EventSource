@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using asom.lib.core;
 using Newtonsoft.Json;
 using UserManagement.core.shared;
+using ICriteria = UserManagement.core.shared.ICriteria;
 
 namespace UserManagement.core.Services.users.dataStore;
 
@@ -64,18 +66,18 @@ public class FileDataStoreManager<TData> where TData : EntityBase
         if (lst.ContainsKey(objId))
         {
             var data = lst[objId];
-            return CommandResponse<TData>.Successful(data, "User Loaded Successfully");
+            return CommandResponse<TData>.SuccessResponse("User Loaded Successfully", data);
         }
 
-        return CommandResponse<TData>.Failed($"Record with Id : {objId} Not  found");
+        return CommandResponse<TData>.FailedResponse($"Record with Id : {objId} Not  found");
     }
 
-    internal async Task<CommandResponse<IEnumerable<TData>>> GetItems(ICriteria criteria)
+    internal async Task<CommandResponse<IEnumerable<TData>>> GetItems()
     {
         await getFileContent();
         // check if user Exist
         var data = lst.Values.ToList();
-        return CommandResponse<IEnumerable<TData>>.Successful(data, "All users returned");
+        return CommandResponse<IEnumerable<TData>>.SuccessResponse("All users returned",data );
     }
 
     private async Task<string> readFileContent()

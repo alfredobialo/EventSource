@@ -1,4 +1,5 @@
-﻿using UserManagement.core.Services.users.model;
+﻿using asom.lib.core;
+using UserManagement.core.Services.users.model;
 using UserManagement.core.Services.users.reqRes;
 using UserManagement.core.shared;
 
