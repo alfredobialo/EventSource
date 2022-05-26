@@ -2,10 +2,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MediatR;
 using Microsoft.Extensions.Options;
-using UserManagement.core.commands;
 using UserManagement.core.commands.user;
 using UserManagement.core.di;
-using UserManagement.core.Services.users.dataStore;
 using UserManagement.core.shared;
 
 var builder = WebApplication.CreateBuilder(args);
