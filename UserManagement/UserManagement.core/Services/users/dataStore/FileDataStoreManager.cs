@@ -42,14 +42,32 @@ public class FileDataStoreManager<TData> where TData : EntityBase
         if (!lst.ContainsKey(obj.Id))
         {
             lst.Add(obj.Id, obj);
-            var streamWriter = File.CreateText(path);
-            await streamWriter.WriteAsync(JsonConvert.SerializeObject(lst));
-            await streamWriter.FlushAsync();
-            streamWriter.Close();
+            await createFileWithData();
             return CommandResponse.Successful("User Created Successfully");
         }
 
         return CommandResponse.Failure($"Record with Id : {obj.Id} already Exist");
+    }
+    internal async Task<CommandResponse> DeleteItem(string objId)
+    {
+        await getFileContent();
+        // check if user Exist
+        if (lst.ContainsKey(objId))
+        {
+            lst.Remove(objId);
+            await createFileWithData();
+            return CommandResponse.Successful("User Deleted Successfully");
+        }
+
+        return CommandResponse.Failure($"Record with Id : {objId} Not Found");
+    }
+
+    private async Task createFileWithData()
+    {
+        var streamWriter = File.CreateText(path);
+        await streamWriter.WriteAsync(JsonConvert.SerializeObject(lst));
+        await streamWriter.FlushAsync();
+        streamWriter.Close();
     }
 
     private async Task getFileContent()

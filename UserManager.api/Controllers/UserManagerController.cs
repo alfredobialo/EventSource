@@ -40,4 +40,17 @@ public class UserManagerController : ControllerBase
 
         return BadRequest(added);
     }
+
+
+    [HttpPut("")]
+    public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileNameUpdateRequest userData)
+    {
+        var response = await _mediator.Send(new UpdateUserCommand(userData));
+
+        return response.Success switch
+        {
+            true => Ok(response),
+            _ => BadRequest(response)
+        };
+    }
 }
