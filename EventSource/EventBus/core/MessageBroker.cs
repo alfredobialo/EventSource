@@ -9,6 +9,7 @@ namespace EventSource.EventBus
 
         public MessageBroker()
         {
+
         }
 
         public IMessageReply AddMessage(IChannelInfo channelInfo, IMessage message)
