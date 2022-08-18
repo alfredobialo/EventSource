@@ -6,7 +6,7 @@ using ICriteria = UserManagement.core.shared.ICriteria;
 
 namespace UserManagement.core.Services.users.dataStore;
 
-public class FileDataStoreManager<TData> where TData : EntityBase
+public class FileDataStoreManager<TData>  where TData : EntityBase
 {
     private readonly string _fileName;
     Dictionary<string, TData>? lst = new Dictionary<string, TData>();

@@ -6,21 +6,13 @@ using UserManagement.core.Services.users.reqRes;
 
 namespace UserManagement.core.commands.user;
 
-public record GetUserCommand  : IRequest<CommandResponse<AppUser>>
+public record GetUserCommand(UserQueryRequest QueryRequest) : IRequest<CommandResponse<AppUser>>
 {
-    public GetUserCommand(UserQueryRequest queryRequest)
-    {
-        QueryRequest = queryRequest;
-    }
-    public UserQueryRequest QueryRequest { get; set; }
+    public UserQueryRequest QueryRequest { get; set; } = QueryRequest;
 }
-public record GetUsersCommand  : IRequest<PagedCommandResponse<IEnumerable<AppUser>>>
+public record GetUsersCommand(UserListQueryRequest QueryRequest) : IRequest<PagedCommandResponse<IEnumerable<AppUser>>>
 {
-    public GetUsersCommand(UserListQueryRequest queryRequest)
-    {
-        QueryRequest = queryRequest;
-    }
-    public UserListQueryRequest QueryRequest { get; set; }
+    public UserListQueryRequest QueryRequest { get; set; } = QueryRequest;
 }
 
 public class GetUserCommandHandler : IRequestHandler<GetUserCommand, CommandResponse<AppUser>>,

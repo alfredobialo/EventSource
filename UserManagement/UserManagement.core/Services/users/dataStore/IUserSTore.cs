@@ -13,16 +13,6 @@ public interface IUserStore
     Task<PagedCommandResponse<IEnumerable<AppUserEntity>>> GetUser(PagedDataCriteria criteria);
 }
 
-public class AppUserEntity : EntityBase
-{
-    internal AppUserEntity()
-    {
-    }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-}
-
 public class UserStoreFactory  : IUserStoreFactory
 {
     private readonly AppConfig _appConfig;
