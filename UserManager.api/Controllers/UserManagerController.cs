@@ -15,8 +15,16 @@ public class UserManagerController : ControllerBase
     public UserManagerController(IMediator mediator) => _mediator = mediator;
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(string id) =>
-        Ok(await _mediator.Send(new GetUserCommand(new UserQueryRequest(id))));
+    public async Task<IActionResult> GetUser(string id)
+    {
+        var cmdResponse = await _mediator.Send(new GetUserCommand(new UserQueryRequest(id)));
+        return cmdResponse.Success switch
+        {
+            true => Ok(cmdResponse),
+            _ => BadRequest(cmdResponse)
+        };
+
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetUsers([FromQuery] UserListQueryRequest request) =>
@@ -30,7 +38,8 @@ public class UserManagerController : ControllerBase
 
         if (added.Success)
         {
-            return Ok(added);
+            var created = Created(string.Empty, added);
+            return created;
         }
 
         return BadRequest(added);

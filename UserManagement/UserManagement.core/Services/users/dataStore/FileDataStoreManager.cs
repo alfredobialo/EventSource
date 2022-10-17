@@ -81,7 +81,8 @@ public class FileDataStoreManager<TData>  where TData : EntityBase
     {
         await getFileContent();
         // check if user Exist
-        if (lst.ContainsKey(objId))
+        var firstOrDefault = lst.Keys.Any(x => x == objId);
+        if (firstOrDefault)
         {
             var data = lst[objId];
             return CommandResponse<TData>.SuccessResponse("User Loaded Successfully", data);

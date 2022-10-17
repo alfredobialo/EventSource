@@ -1,4 +1,6 @@
 ﻿using asom.lib.core;
+using Microsoft.Extensions.Logging;
+using UserManagement.core.extensions;
 using UserManagement.core.Services.users.dataStore;
 using UserManagement.core.Services.users.model;
 using UserManagement.core.Services.users.reqRes;
@@ -7,15 +9,19 @@ namespace UserManagement.core.Services.users.Impl;
 
 public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
 {
+    private readonly ILogger<UserManagerManager> _logger;
     private readonly IUserStore _userStore;
 
-    public UserManagerManager(IUserStoreFactory storeFactory)
+    public UserManagerManager(IUserStoreFactory storeFactory, ILogger<UserManagerManager> logger)
     {
+        _logger = logger;
         _userStore = storeFactory.GetStore();
     }
     public async Task<CommandResponse> AddUser(AppUser user)
     {
         AppUserEntity userEntity = user.ToEntity();
+        
+        _logger.LogInformation($"Creating New User: {user.ToJson(true, true)}");
         var cmdResult  = await _userStore.CreateUser(userEntity);
         return cmdResult;
     }
@@ -31,7 +37,7 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
         if(entity.Success)
             return CommandResponse<AppUser>.SuccessResponse("",AppUser.FromEntity(entity.Data));
 
-        return null;
+        return CommandResponse<AppUser>.FailedResponse(entity.Message);
     }
 
     public async Task<PagedCommandResponse<IEnumerable<AppUser>>> GetUsers(UserListQueryRequest query)
