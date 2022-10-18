@@ -21,8 +21,8 @@ public class UserManagerController : BaseController
         var cmdResponse = await _mediator.Send(new GetUserCommand(new UserQueryRequest(id)));
         return cmdResponse.Success switch
         {
-            true => Ok(cmdResponse),
-            _ => BadRequest(cmdResponse)
+            true => OkCmd(cmdResponse),
+            _ => BadCmd(cmdResponse)
         };
 
     }
@@ -39,11 +39,11 @@ public class UserManagerController : BaseController
 
         if (added.Success)
         {
-            var created = Created(string.Empty, added);
+            var created = CreatedCmd( added);
             return created;
         }
 
-        return BadRequest(added);
+        return BadCmd(added);
     }
 
 
@@ -54,8 +54,8 @@ public class UserManagerController : BaseController
 
         return response.Success switch
         {
-            true => Ok(response),
-            _ => BadRequest(response)
+            true => OkCmd(response),
+            _ => BadCmd(response)
         };
     }
 }
