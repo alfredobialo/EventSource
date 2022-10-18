@@ -8,11 +8,12 @@ namespace UserManager.api.Controllers;
 
 [ApiController]
 [Route("user-manager")]
-public class UserManagerController : ControllerBase
+public class UserManagerController : BaseController
 {
-    private readonly IMediator _mediator;
-
-    public UserManagerController(IMediator mediator) => _mediator = mediator;
+    public UserManagerController(IMediator mediator) : base(mediator)
+    {
+        
+    } 
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUser(string id)
