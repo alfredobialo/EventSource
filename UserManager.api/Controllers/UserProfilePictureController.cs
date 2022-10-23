@@ -15,6 +15,18 @@ public class UserProfilePictureController :BaseController
     [HttpPost("", Name = nameof(UploadPhoto))]
     public async Task<IActionResult> UploadPhoto(ProfilePictureUploadRequest request)
     {
+         var response =  new {
+            success = true,
+            meta =  new {
+                user ="00001",
+                images = new
+                 {
+                    size = "sm",
+                    url = "http://123.233.1.33/images/sm/00001-img-9328d63267d3",
+                    tag = "00001 profile picture, Alfred Picture, Obialo Picture, Alfred Obialo, 00001"
+                }
+            }
+         };
         return Ok();
     }
 }
