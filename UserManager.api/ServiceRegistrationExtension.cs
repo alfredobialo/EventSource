@@ -8,9 +8,9 @@ using UserManagement.core.shared;
 
 namespace UserManager.api;
 
-public class ServiceRegistration
+public static class ServiceRegistrationExtension
 {
-    public static void RegisterApplicationServices(WebApplicationBuilder builder)
+    public static WebApplicationBuilder RegisterApplicationServices(this WebApplicationBuilder builder)
     {
         var appConfig = builder.Configuration.GetSection(nameof(AppConfig));
         builder.Services.Configure<AppConfig>(appConfig)
@@ -34,5 +34,7 @@ public class ServiceRegistration
             containerBuilder.RegisterModule<AppDiRegistration>();
             //containerBuilder.Build();
         }));
+
+        return builder;
     }
 }

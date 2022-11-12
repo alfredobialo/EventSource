@@ -1,10 +1,11 @@
 using UserManager.api;
 
-var builder = WebApplication.CreateBuilder(args);
+var webApp = WebApplication
+    .CreateBuilder(args)
+    .RegisterApplicationServices()
+    .Build();
 
-ServiceRegistration.RegisterApplicationServices(builder);
-
-var app = builder.Build();
+var app = webApp;
 
 app = AppFeatures.Use(app);
 
