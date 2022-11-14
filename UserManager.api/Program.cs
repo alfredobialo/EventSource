@@ -1,5 +1,4 @@
 using UserManager.api;
-
 var webApp = WebApplication
     .CreateBuilder(args)
     .RegisterApplicationServices()

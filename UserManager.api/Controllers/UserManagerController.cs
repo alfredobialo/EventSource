@@ -43,6 +43,7 @@ public class UserManagerController : BaseController
             return created;
         }
 
+        added.Code = StatusCodes.Status400BadRequest;
         return BadCmd(added);
     }
 

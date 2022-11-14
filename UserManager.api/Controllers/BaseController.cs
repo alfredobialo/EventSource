@@ -14,13 +14,9 @@ public class BaseController  : ControllerBase
         this._mediator = mediator;
     }
 
-    protected IActionResult BadCmd(object data, string message = "Invalid entry")
-    {
-        CommandResponse<object> response = CommandResponse<object>.FailedResponse(message ?? "Invalid Entry",
-            StatusCodes.Status400BadRequest);
-        response.Data = data;
-        return BadRequest(response);
-    } 
+    protected IActionResult BadCmd(object data) =>
+        BadRequest(data);
+
     protected IActionResult NotFoundCmd(object data, string message = "Oops! data not found")
     {
         CommandResponse<object> response = CommandResponse<object>.FailedResponse(message ?? "Oops! data not found",
@@ -53,7 +49,7 @@ public class BaseController  : ControllerBase
     protected IActionResult CreatedCmd<T>(T data, string message= "Created")
     {
         CommandResponse<T> response = new CommandResponse<T>() { Message = message ?? "Created",
-            Code = StatusCodes.Status201Created, Data = data
+            Code = StatusCodes.Status201Created, Data = data, Success = true
         };
         return Created("",response);
     }
