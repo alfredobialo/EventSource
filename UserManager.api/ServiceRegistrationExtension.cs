@@ -17,6 +17,7 @@ public static class ServiceRegistrationExtension
             .AddSingleton(sp => sp.GetService<IOptions<AppConfig>>().Value);
         // Add services to the container.
         builder.Services.AddControllers();
+        builder.Services.AddLocalization();
         builder.Services.AddCors(opt =>
         {
             opt.AddPolicy("angularClientPolicy", policyBuilder =>
