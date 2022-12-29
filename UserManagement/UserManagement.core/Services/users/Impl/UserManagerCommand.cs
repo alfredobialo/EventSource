@@ -28,7 +28,10 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
 
     public async Task<CommandResponse> UpdateProfileName(UserProfileNameUpdateRequest request)
     {
-        return await  _userStore.UpdateUserName(request);
+        var result =  await  _userStore.UpdateUserName(request);
+        // if operation was successful raise event of this operation
+        
+        return result;
     }
 
     public async Task<CommandResponse<AppUser>> GetUser(UserQueryRequest query)
