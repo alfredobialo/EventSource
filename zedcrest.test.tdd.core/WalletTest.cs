@@ -24,8 +24,27 @@ public class WalletTest
     }
 }
 
-public class WalletAccount
+public class WalletAccount  : IWalletAccount
 {
+    private Dictionary<string, WalletAccount> _walletAccounts = new Dictionary<string, WalletAccount>();
+    public WalletUser Owner { get; internal set; }
+    public DateTimeOffset DateCreated { get; set; }
+
+    public void Add(WalletCurrency walletCurrency)
+    {
+    }
+}
+
+public interface IWalletAccount
+{
+    void Add(WalletCurrency walletCurrency);
+
+}
+
+public class WalletCurrency
+{
+    public string Cur { get; set; }
+    public decimal Bal { get; set; }
 }
 
 public class WalletBuilder
