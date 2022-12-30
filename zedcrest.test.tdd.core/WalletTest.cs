@@ -30,21 +30,21 @@ public class WalletAccount  : IWalletAccount
     public WalletUser Owner { get; internal set; }
     public DateTimeOffset DateCreated { get; set; }
 
-    public void Add(WalletCurrency walletCurrency)
+    public void Add(Wallet walletCurrency)
     {
     }
 }
 
 public interface IWalletAccount
 {
-    void Add(WalletCurrency walletCurrency);
+    void Add(Wallet walletCurrency);
 
 }
 
-public class WalletCurrency
+public class Wallet
 {
-    public string Cur { get; set; }
-    public decimal Bal { get; set; }
+    public string Currency { get; set; }
+    public decimal Balance { get; set; }
 }
 
 public class WalletBuilder
