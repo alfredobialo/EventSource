@@ -1,14 +1,11 @@
-﻿namespace zedcrest.wallet.core.models;
+﻿using itrex.businessObjects.model.core;
 
-public record WalletUser
+namespace zedcrest.wallet.core.models;
+
+public class WalletUser :WalletBase
 {
-    public string Id
-    {
-        get;
-        init;
-    }
     public static WalletUser New()
     {
-        return new WalletUser() {Id = Guid.NewGuid().ToString()};
+        return new WalletUser() {Id = $"user-{NewId()}".ToString()};
     }
 }
