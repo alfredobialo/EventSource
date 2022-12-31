@@ -19,7 +19,7 @@ public class WalletTest
         // arrange
 
         WalletBuilder builder = new WalletBuilder()
-                .CreateWallet(WalletUser.New())
+                .CreateWallet(new WalletUser(){Name = "Alfred", Id = "alfred-wallet-2022"})
                 .AddUsdWallet()
                 .AddNgnWallet() // we can't have the same wallet entity
             ;
@@ -33,14 +33,28 @@ public class WalletTest
         walletAccount.Wallets.Should().NotContainNulls(x => x.Key);
     }
 
+    [Fact(DisplayName ="Process WalletAccountRequest")]
+    public async Task Process_WalletAccountRequest_Should_Pass()
+    {
+        // arrange
+        // build a wallet Request Object
+        //WalletAccountRequest war = new WalletAccountRequest();
+        //act
+
+        //assert
+    }
+    
+    
+
     private void printWalletDetails(IWalletAccountRequest wa)
     {
-        _writer.WriteLine("=================== WALLET ACCOUNT ===================\n");
+        _writer.WriteLine($"=================== WALLET ACCOUNT {wa.Key}===================\n");
         _writer.WriteLine($"User Details: {wa.Owner?.Name,15}, {wa.Owner.Key,10}\n");
         _writer.WriteLine($"============== WALLETS {wa.Wallets.Count} ===============");
         foreach (var w in wa.Wallets)
         {
-            _writer.WriteLine($"======= WALLET Type {w.Currency} ====  Avail Bal : {w.Balance:N2}, id: {w.Key,10}=====");
+            _writer.WriteLine($"======= WALLET Type {w.Currency} ====  Avail Bal : {w.Balance:N2}\n" +
+                $"Id: {w.Key,-15} AccountID : {w.AccountId}");
         }
     }
 }

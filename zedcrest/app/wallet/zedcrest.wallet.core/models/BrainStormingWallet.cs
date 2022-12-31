@@ -4,8 +4,12 @@ using itrex.businessObjects.model.core;
 
 namespace zedcrest.wallet.core.models;
 
-public class WalletAccountRequest  : IWalletAccountRequest
+public class WalletAccountRequest  :WalletBase, IWalletAccountRequest
 {
+    internal WalletAccountRequest()
+    {
+        Key = NewId();
+    }
     private Dictionary<string, Wallet> _wallets = new Dictionary<string, Wallet>();
     public WalletUser? Owner { get; internal set; }
     public DateTimeOffset DateCreated { get; set; }
@@ -14,15 +18,20 @@ public class WalletAccountRequest  : IWalletAccountRequest
 
     public void Add(Wallet wallet)
     {
+        wallet.AccountId = Key;
         _wallets.Add(wallet.Key, wallet);
     }
 }
 
+/// <summary>
+/// Request for Creating a new Wallet Account
+/// </summary>
 public interface IWalletAccountRequest
 {
     void Add(Wallet walletCurrency);
     ReadOnlyCollection<Wallet> Wallets { get; }
     WalletUser Owner { get; }
+    string Key { get; }
 }
 
 public class Wallet : WalletBase
@@ -34,6 +43,7 @@ public class Wallet : WalletBase
     }
     public string Currency { get; set; }
     public decimal Balance { get; set; }
+    public string AccountId { get; internal set; }
 }
 
 public class WalletBuilder
