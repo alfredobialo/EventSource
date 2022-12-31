@@ -4,13 +4,13 @@ using itrex.businessObjects.model.core;
 
 namespace zedcrest.wallet.core.models;
 
-public class WalletAccount  : IWalletAccount
+public class WalletAccountRequest  : IWalletAccountRequest
 {
     private Dictionary<string, Wallet> _wallets = new Dictionary<string, Wallet>();
     public WalletUser? Owner { get; internal set; }
     public DateTimeOffset DateCreated { get; set; }
 
-    public ImmutableList<Wallet> Wallets => _wallets.Values.ToImmutableList();
+    public ReadOnlyCollection<Wallet> Wallets => new(_wallets.Values.ToList());
 
     public void Add(Wallet wallet)
     {
@@ -18,10 +18,10 @@ public class WalletAccount  : IWalletAccount
     }
 }
 
-public interface IWalletAccount
+public interface IWalletAccountRequest
 {
     void Add(Wallet walletCurrency);
-    ImmutableList<Wallet> Wallets { get; }
+    ReadOnlyCollection<Wallet> Wallets { get; }
     WalletUser Owner { get; }
 }
 
@@ -30,7 +30,7 @@ public class Wallet : WalletBase
     public Wallet(string currency)
     {
         Currency = currency;
-        Id = $"{Currency}-wallet-{NewId()}";
+        Id = $"{Currency.ToLower()}-wallet-{NewId()}";
     }
     public string Currency { get; set; }
     public decimal Balance { get; set; }
@@ -40,9 +40,9 @@ public class WalletBuilder
 {
     private WalletUser wuser = null;
     private Dictionary<string, Wallet> wallets = new Dictionary<string, Wallet>();
-    public IWalletAccount Build()
+    public IWalletAccountRequest Build()
     {
-        WalletAccount wacc = new WalletAccount();
+        WalletAccountRequest wacc = new WalletAccountRequest();
         wacc.Owner = wuser;
         foreach (var wallet in wallets)
         {
@@ -96,7 +96,7 @@ public class WalletFactory
         
         // validate Currency : 
         
-        return new Wallet(currency.ToLower())
+        return new Wallet(currency)
         { 
             Balance = bal
         };
