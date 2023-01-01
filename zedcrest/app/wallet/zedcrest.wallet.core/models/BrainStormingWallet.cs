@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using asom.lib.core;
 using itrex.businessObjects.model.core;
 
 namespace zedcrest.wallet.core.models;
@@ -111,6 +112,50 @@ public class WalletFactory
             Balance = bal
         };
     }
+}
+
+public interface IWalletRequestService
+{
+   Task<CommandResponse> ProcessRequest(IWalletAccountRequest war);
+}
+
+public abstract class WalletRequestProcessor  : IWalletRequestService
+{
+    public abstract Task<CommandResponse> ProcessRequest(IWalletAccountRequest war);
+
+    public async Task<CommandResponse> ProcessRequest(WalletAccountRequestContext requestContext)
+    {
+        //Code that executes before the Request is Processed
+        /*
+         * 1) Insert Validation Middleware
+         * 2) Insert Loggers of Fraud Detection Middleware
+         *
+         */
+        var response = await ProcessRequest(requestContext.WalletRequest);
+        
+        //Code that Executes After Request is Processed
+        /*
+         * 1) Insert Notification Middleware
+         * 2) Event Handlers Middleware
+         * 
+         */
+
+        return response;
+    }
+
+}
+
+public class WalletRequestProcessorImpl : WalletRequestProcessor
+{
+    public override Task<CommandResponse> ProcessRequest(IWalletAccountRequest war)
+    {
+        return null;
+    }
+}
+
+public record WalletAccountRequestContext
+{
+    public IWalletAccountRequest WalletRequest { get; init; }
 }
 
 public class KnownCurrency

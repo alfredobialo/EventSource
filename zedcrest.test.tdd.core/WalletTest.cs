@@ -1,3 +1,5 @@
+using asom.lib.core;
+using Autofac;
 using FluentAssertions;
 using Xunit.Abstractions;
 using zedcrest.wallet.core.models;
@@ -7,7 +9,7 @@ namespace zedcrest.test.tdd.core;
 public class WalletTest
 {
     private readonly ITestOutputHelper _writer;
-
+    private IContainer _container;
     public WalletTest(ITestOutputHelper writer)
     {
         _writer = writer;
@@ -38,10 +40,14 @@ public class WalletTest
     {
         // arrange
         // build a wallet Request Object
-        //WalletAccountRequest war = new WalletAccountRequest();
+        IWalletAccountRequest war = new WalletBuilder().Build();
         //act
-
+        IWalletRequestService wrs = _container.Resolve<IWalletRequestService>();
+        CommandResponse response = await wrs.ProcessRequest(war);
+        
         //assert
+        Assert.True(response.Success);
+        
     }
     
     
