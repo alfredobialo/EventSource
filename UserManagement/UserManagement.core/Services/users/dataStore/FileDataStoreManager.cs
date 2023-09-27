@@ -39,9 +39,9 @@ public class FileDataStoreManager<TData>  where TData : EntityBase
     {
         await getFileContent();
         // check if user Exist
-        if (!lst.ContainsKey(obj.Id))
+        if (!lst.ContainsKey(obj.Key))
         {
-            lst.Add(obj.Id, obj);
+            lst.Add(obj.Key, obj);
             await createFileWithData();
             return CommandResponse.Successful("User Created Successfully");
         }
@@ -73,7 +73,7 @@ public class FileDataStoreManager<TData>  where TData : EntityBase
     private async Task getFileContent()
     {
         await CreateDbFile();
-        var content = await readFileContent();
+        var content = await _readFileContent();
         lst = JsonConvert.DeserializeObject<Dictionary<string, TData>>(content);
     }
 
@@ -99,7 +99,7 @@ public class FileDataStoreManager<TData>  where TData : EntityBase
         return CommandResponse<IEnumerable<TData>>.SuccessResponse("All users returned",data );
     }
 
-    private async Task<string> readFileContent()
+    private async Task<string> _readFileContent()
     {
         var dataStream = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         byte[] fileByte = new byte[dataStream.Length];

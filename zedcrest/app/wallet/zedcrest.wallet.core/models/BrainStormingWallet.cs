@@ -9,7 +9,7 @@ public class WalletAccountRequest  :WalletBase, IWalletAccountRequest
 {
     internal WalletAccountRequest()
     {
-        Key = NewId();
+        Key = NewNumericId(25);
     }
     private Dictionary<string, Wallet> _wallets = new Dictionary<string, Wallet>();
     public WalletUser? Owner { get; internal set; }
@@ -40,7 +40,7 @@ public class Wallet : WalletBase
     public Wallet(string currency)
     {
         Currency = currency;
-        Id = $"{Currency.ToLower()}-wallet-{NewId()}";
+        Id = $"{Currency.ToLower()}-wallet-{NewId(15)}";
     }
     public string Currency { get; set; }
     public decimal Balance { get; set; }
@@ -169,10 +169,4 @@ public class KnownCurrency
 
 public class WalletBase : EntityBase
 {
-    public static string NewId()
-    {
-        string id = Guid.NewGuid().ToString().Replace("-", "").ToLower();
-        id = id.Substring(0, 4) + id.Substring(7, 8);
-        return id;
-    }
 }

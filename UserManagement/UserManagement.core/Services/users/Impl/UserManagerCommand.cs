@@ -17,29 +17,35 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
         _logger = logger;
         _userStore = storeFactory.GetStore();
     }
+
     public async Task<CommandResponse> AddUser(AppUser user)
     {
         AppUserEntity userEntity = user.ToEntity();
-        
-        _logger.LogInformation($"Creating New User: {user.ToJson(true, true)}");
-        var cmdResult  = await _userStore.CreateUser(userEntity);
+
+        _logger.LogInformation("Creating New User: {user}", user);
+        var cmdResult = await _userStore.CreateUser(userEntity);
+        _logger.LogWarning("Adding user action completed with result : {cmdResult}", cmdResult.ToJson());
         return cmdResult;
     }
 
     public async Task<CommandResponse> UpdateProfileName(UserProfileNameUpdateRequest request)
     {
-        var result =  await  _userStore.UpdateUserName(request);
+        _logger.LogInformation("Updating User ProfileName :REQUEST  {request}", request);
+        var result = await _userStore.UpdateUserName(request);
         // if operation was successful raise event of this operation
-        
+        _logger.LogWarning("Updating user Profile Name action completed with result : {result}", result.ToJson());
         return result;
     }
 
     public async Task<CommandResponse<AppUser>> GetUser(UserQueryRequest query)
     {
         var entity = await _userStore.GetUser(query.UserId);
-        if(entity.Success)
-            return CommandResponse<AppUser>.SuccessResponse("",AppUser.FromEntity(entity.Data));
-
+        if (entity.Success)
+        {
+            _logger.LogInformation( "User Record Found: {entity}, Request data : {query} ", entity.ToJson(), query);
+            return CommandResponse<AppUser>.SuccessResponse("", AppUser.FromEntity(entity.Data));
+        }
+        _logger.LogWarning( "User Record not Found FOR, Request data : {query} ",  query);
         return CommandResponse<AppUser>.FailedResponse(entity.Message);
     }
 
@@ -55,12 +61,12 @@ public class UserManagerManager : IUserManagerCommand, IUserManagerQuery
         });
         if (entity.Success)
         {
-             var e = entity.Data
-                 .OrderBy(x => x.FirstName)
-                 .ThenBy(x =>x.LastName)
-                 .Select(x => AppUser.FromEntity(x));
-             var newData = entity.Copy(e);
-             return newData;
+            var e = entity.Data
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
+                .Select(x => AppUser.FromEntity(x));
+            var newData = entity.Copy(e);
+            return newData;
         }
 
 

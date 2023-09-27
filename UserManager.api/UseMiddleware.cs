@@ -1,6 +1,8 @@
-﻿namespace UserManager.api;
+﻿using SixLabors.ImageSharp.Web.DependencyInjection;
 
-public class AppFeatures
+namespace UserManager.api;
+
+public class UseMiddleware
 {
     public static WebApplication Use(WebApplication app)
     {
@@ -11,7 +13,7 @@ public class AppFeatures
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
