@@ -17,11 +17,18 @@ public class BaseController  : ControllerBase
     protected IActionResult BadCmd(object data) =>
         BadRequest(data);
 
-    protected IActionResult NotFoundCmd(object data, string message = "Oops! data not found")
+    protected IActionResult NotFoundCmd(CommandResponse data)
+    {
+        CommandResponse<object> response = CommandResponse<object>.FailedResponse(data.Message ?? "Oops! data not found",
+            StatusCodes.Status404NotFound);
+      
+        return NotFound(response);
+    }
+    protected IActionResult NotFoundCmd(string message)
     {
         CommandResponse<object> response = CommandResponse<object>.FailedResponse(message ?? "Oops! data not found",
             StatusCodes.Status404NotFound);
-        response.Data = data;
+       
         return NotFound(response);
     }
     protected IActionResult OkCmd(object data, string message = "Successful")

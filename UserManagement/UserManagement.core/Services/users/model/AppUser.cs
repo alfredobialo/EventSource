@@ -15,8 +15,8 @@ public record AppUser
         {
             Email = Email,
             Id = Id,
-            DateCreated = DateTimeOffset.Now,
-            DateModified = DateTimeOffset.Now,
+            DateCreated = DateTime.UtcNow,
+            DateModified = DateTime.UtcNow,
             FirstName = FirstName,
             LastName = LastName
         };
@@ -26,7 +26,7 @@ public record AppUser
         return new AppUser()
         {
             Email = e.Email,
-            Id = e.Id,
+            Id = e.Key,
             FirstName = e.FirstName,
             LastName = e.LastName
         };

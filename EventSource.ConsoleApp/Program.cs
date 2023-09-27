@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EventSource.Core;
 using EventSource.Domain.crm;
 using EventSource.Domain.orders;
@@ -12,6 +13,8 @@ namespace EventSource.ConsoleApp
     {
         static void Main(string[] args)
         {
+            Solution(new int[1]);
+            Console.ReadLine();
             //PipeStream ps = new NamedPipeServerStream("myPipe", PipeDirection.InOut);
             bool exitApp = false;
 
@@ -84,6 +87,34 @@ namespace EventSource.ConsoleApp
                 Console.WriteLine("Sales Order Details:");
                 Console.WriteLine($"Customer Name: {salesOrder.Customer.Name}");
                 Console.WriteLine($"Date: {salesOrder.SalesDate:f}");
+            }
+        }
+        
+        /*def solution(arr):
+          arr.sort(key=lambda arr: (bin(arr).count("1"), arr))
+          return arr
+        
+        nums = [31,15,7,3,2]
+        print(solution(nums))*/
+
+        public static void Solution(int[] arr)
+        {
+            int[] nums  = new int[]{1,2,3,4};
+            var lst = new List<string>();
+            foreach (var num in nums)
+            {
+                lst.Add(Convert.ToString(num,2));
+                //lst.Add(BinaryConversion.ConvertBase10ToBaseN(num,2));
+            }
+
+            print(lst);
+        }
+
+        private static void print(List<string> lst)
+        {
+            foreach (var i in lst)
+            {
+                Console.WriteLine(i);
             }
         }
     }

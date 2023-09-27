@@ -1,4 +1,5 @@
 using asom.lib.core;
+using Microsoft.Extensions.Logging;
 using UserManagement.core.Services.users.reqRes;
 
 namespace UserManagement.core.Services.users.dataStore;
@@ -69,6 +70,7 @@ public class UserFileStore : IUserStore
                         x.Email
                             .ToLower()
                             .StartsWith(criteria.Query.ToLower())
+                        || x.Key == criteria.Query
                     )
                     .OrderBy(x => x.FirstName);
             }

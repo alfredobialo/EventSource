@@ -21,8 +21,8 @@ public class UserManagerController : BaseController
         var cmdResponse = await _mediator.Send(new GetUserCommand(new UserQueryRequest(id)));
         return cmdResponse.Success switch
         {
-            true => OkCmd(cmdResponse),
-            _ => BadCmd(cmdResponse)
+            true => OkCmd(cmdResponse.Data),
+            _ => NotFoundCmd(cmdResponse)
         };
 
     }
