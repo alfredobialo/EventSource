@@ -1,4 +1,5 @@
-﻿using Confluent.Kafka.Admin;
+﻿using Confluent.Kafka;
+using Confluent.Kafka.Admin;
 
 namespace Brokers;
 
@@ -6,6 +7,7 @@ public class Class1
 {
     void CreateTopic(string topicName)
     {
-        //TopicSpecification
+        IAdminClient admin;
+        
     }
 }

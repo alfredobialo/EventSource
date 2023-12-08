@@ -46,7 +46,7 @@ namespace EventSource.ConsoleApp
             }
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("ESTHER APP has ENDED. Thanks for Shinning us");
+            Console.WriteLine("PUMKIN APP has ENDED. Thanks for Shinning us");
             Console.ResetColor();
             Console.ReadLine();
             ISalesOrderService salesOrderService = new SalesOrderService();
